@@ -49,6 +49,7 @@ values."
                markdown-live-preview-engine 'vmd)
      nixos
      ;; org
+     python
      racket
      (shell :variables
             shell-default-shell 'eshell)
