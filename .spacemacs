@@ -44,6 +44,7 @@ values."
      ess
      git
      github
+     java
      (latex :variables
             latex-enable-auto-fill t)
      (markdown :variable
