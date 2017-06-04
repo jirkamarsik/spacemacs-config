@@ -319,6 +319,8 @@ you should place your code here."
   ;; Auto-refresh document preview.
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
+
+  ;; Copy and paste from clipboard at the terminal.
   (defun copy-to-clipboard ()
     "Copies selection to x-clipboard."
     (interactive)
@@ -348,6 +350,18 @@ you should place your code here."
     )
   (evil-leader/set-key "o y" 'copy-to-clipboard)
   (evil-leader/set-key "o p" 'paste-from-clipboard)
+
+
+  ;; Set up Oracle proxy in Emacs.
+  (setq url-proxy-services
+         '(("http"     . "http://www-proxy.us.oracle.com:80")
+           ("https"    . "http://www-proxy.us.oracle.com:80")
+           ("no_proxy" . "localhost\\|127\\.0\\.0\\.[0-9]*")))
+
+
+  ;; Set up Eclim
+  (setq eclim-eclipse-dirs '("/home/jirka/Applications/eclipse")
+        eclim-executable "/home/jirka/Applications/eclipse/eclim")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
