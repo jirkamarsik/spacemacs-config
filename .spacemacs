@@ -75,7 +75,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(evil-escape)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -358,11 +358,6 @@ you should place your code here."
          '(("http"     . "http://www-proxy.us.oracle.com:80")
            ("https"    . "http://www-proxy.us.oracle.com:80")
            ("no_proxy" . "localhost\\|127\\.0\\.0\\.[0-9]*")))
-
-
-  ;; Set up Eclim
-  (setq eclim-eclipse-dirs '("/home/jirka/Applications/eclipse")
-        eclim-executable "/home/jirka/Applications/eclipse/eclim")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
