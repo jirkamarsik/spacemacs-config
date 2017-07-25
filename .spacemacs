@@ -40,7 +40,7 @@ values."
      emacs-lisp
      auto-completion
      bibtex
-     css
+     (clojure :variables clojure-enable-fancify-symbols t)
      csv
      ess
      git
