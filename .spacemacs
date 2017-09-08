@@ -45,6 +45,7 @@ values."
      ess
      git
      github
+     graphviz
      haskell
      html
      java
@@ -356,7 +357,7 @@ you should place your code here."
   ;; Set up Oracle proxy in Emacs.
   (setq url-proxy-services
          '(("http"     . "http://www-proxy.us.oracle.com:80")
-           ("https"    . "http://www-proxy.us.oracle.com:80")
+           ("https"    . "https://www-proxy.us.oracle.com:80")
            ("no_proxy" . "localhost\\|127\\.0\\.0\\.[0-9]*")))
   )
 
