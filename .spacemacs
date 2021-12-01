@@ -31,23 +31,18 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     ivy
-     emacs-lisp
      auto-completion
      bibtex
      (clojure :variables clojure-enable-fancify-symbols t)
      csv
+     emacs-lisp
      ess
      finance
      git
      github
      graphviz
      haskell
+     helm
      html
      java
      javascript
@@ -57,14 +52,19 @@ values."
      (markdown :variable
                markdown-live-preview-engine 'vmd)
      nixos
-     ;; org
+     org
      python
      racket
+     ruby
+     rust
      (shell :variables
-            shell-default-shell 'eshell)
+            shell-default-shell 'eshell
+            shell-default-height 30
+            shell-default-position 'bottom)
      shell-scripts
      spell-checking
      syntax-checking
+     typescript
      (version-control :variables
                       version-control-diff-tool 'diff-hl
                       version-control-global-margin t)
@@ -78,7 +78,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(evil-escape)
+   dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -266,8 +266,18 @@ values."
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
-   ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
-   ;; derivatives. If set to `relative', also turns on relative line numbers.
+   ;; Control line numbers activation.
+   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
+   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; This variable can also be set to a property list for finer control:
+   ;; '(:relative nil
+   ;;   :disabled-for-modes dired-mode
+   ;;                       doc-view-mode
+   ;;                       markdown-mode
+   ;;                       org-mode
+   ;;                       pdf-view-mode
+   ;;                       text-mode
+   ;;   :size-limit-kb 1000)
    ;; (default nil)
    dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
@@ -359,18 +369,20 @@ you should place your code here."
   ;; Set up Oracle proxy in Emacs.
   (setq url-proxy-services
          '(("http"     . "http://www-proxy.us.oracle.com:80")
-           ("https"    . "https://www-proxy.us.oracle.com:80")
-           ("no_proxy" . "localhost\\|127\\.0\\.0\\.[0-9]*")))
+           ("https"    . "http://www-proxy.us.oracle.com:80")
+           ("no_proxy" . "localhost\\|127\\.0\\.0\\.[0-9]*\\|192\\.168\\.0\\.[0-9]*\\|10\\.0\\.0\\.[0-9]*\\|.*\\.us\\.oracle\\.com\\|.*\\.uk\\.oracle\\.com\\|.*\\.au\\.oracle\\.com\\|.*\\.oraclecorp\\.com\\|169\\.254\\.169\\.254\\|.*\\.oraclecloud\\.com")))
+
 
   ;; Load fennel-mode
   (autoload 'fennel-mode "/home/jirka/Applications/fennel-mode/fennel-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.fnl\\'" . fennel-mode))
-  )
+
 
   ;; Required to use hledger instead of ledger itself.
   (setq ledger-mode-should-check-version nil
         ledger-report-links-in-register nil
         ledger-binary-path "hledger")
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -380,11 +392,10 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
- '(exec-path-from-shell-arguments (quote ("-l")))
+ '(exec-path-from-shell-arguments '("-l"))
  '(package-selected-packages
-   (quote
-    (htmlize lua-mode ghub let-alist ledger-mode flycheck-ledger yapfify winum web-beautify pyvenv pytest pyenv-mode py-isort pip-requirements pdf-tools tablist livid-mode skewer-mode simple-httpd live-py-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc hy-mode graphviz-dot-mode fuzzy cython-mode csv-mode company-tern dash-functional tern company-emacs-eclim eclim company-anaconda coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode anaconda-mode pythonic web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode haml-mode emmet-mode company-web web-completion-data yaml-mode intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode ess-smart-equals ess-R-object-popup ess-R-data-view ctable ess julia-mode smeargle orgit org org-ref key-chord magit-gitflow magit-gh-pulls helm-bibtex parsebib gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht evil-magit magit magit-popup git-commit with-editor diff-hl biblio biblio-core xterm-color shell-pop nix-mode multi-term eshell-z eshell-prompt-extras esh-help company-nixos-options nixos-options vmd-mode racket-mode faceup mmm-mode markdown-toc markdown-mode insert-shebang gh-md flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck fish-mode company-shell auto-dictionary company-statistics company-auctex company auto-yasnippet yasnippet auctex-latexmk auctex ac-ispell auto-complete ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy quelpa package-build spacemacs-theme)))
- '(safe-local-variable-values (quote ((TeX-engine . pdflatex)))))
+   '(org-projectile org-pomodoro alert log4e org-category-capture org-present gntp org-mime org-download gnuplot bibtex-completion robe bundler rvm ruby-tools ruby-test-mode rubocop rspec-mode rbenv rake minitest chruby inf-ruby netrunner async flx anzu evil-anzu evil-args evil-surround eyebrowse flx-ido helm lv parseedn parseclj a transient tide typescript-mode treepy graphql toml-mode racer flycheck-rust cargo rust-mode helm-themes helm-swoop helm-pydoc helm-projectile helm-nixos-options helm-mode-manager helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag flyspell-correct-helm sesman ace-jump-helm-line htmlize lua-mode ghub let-alist ledger-mode flycheck-ledger yapfify winum web-beautify pyvenv pytest pyenv-mode py-isort pip-requirements pdf-tools tablist livid-mode skewer-mode simple-httpd live-py-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc hy-mode graphviz-dot-mode fuzzy cython-mode csv-mode company-tern dash-functional tern company-emacs-eclim eclim company-anaconda coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode anaconda-mode pythonic web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode haml-mode emmet-mode company-web web-completion-data yaml-mode intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode ess-smart-equals ess-R-object-popup ess-R-data-view ctable ess julia-mode smeargle orgit org org-ref key-chord magit-gitflow magit-gh-pulls helm-bibtex parsebib gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht evil-magit magit magit-popup git-commit with-editor diff-hl biblio biblio-core xterm-color shell-pop nix-mode multi-term eshell-z eshell-prompt-extras esh-help company-nixos-options nixos-options vmd-mode racket-mode faceup mmm-mode markdown-toc markdown-mode insert-shebang gh-md flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck fish-mode company-shell auto-dictionary company-statistics company-auctex company auto-yasnippet yasnippet auctex-latexmk auctex ac-ispell auto-complete ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm-core google-translate golden-ratio fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link avy quelpa package-build spacemacs-theme))
+ '(safe-local-variable-values '((TeX-engine . pdflatex))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
